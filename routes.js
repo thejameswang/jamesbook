@@ -229,5 +229,7 @@ router.post('/api/posts/comments/:post_id', function(req,res) {
     })
   }
 })
-
+//When I last ended, I failed to test if the logic works for all the conditions
+//Next time, check liking, posting, and comments to make sure all the functions work correctly.
+//Check with TAs to make sure the ideas work.
 module.exports = router;
