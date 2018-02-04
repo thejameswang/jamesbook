@@ -18,7 +18,8 @@ var Post = mongoose.model('Post', {
   content: String,
   likes: Array,
   comments: Array,
-  createdAt: Date
+  createdAt: Date,
+  id: String
 })
 
 
