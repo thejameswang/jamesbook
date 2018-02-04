@@ -183,6 +183,7 @@ router.get('/api/posts/comments/:post_id', function(req,res) {
 
 router.post('/api/posts/likes/:post_id', function(req,res) {
   var token = res.query.token;
+  var postid = res.params.post_id;
   Token.find({token:token}, function(error, result) {
     if(error) {
       res.status(500).send('could not find your error')
@@ -191,7 +192,7 @@ router.post('/api/posts/likes/:post_id', function(req,res) {
     }
   })
 })
-router.get('/api/posts/comments/:post_id', function(req,res) {
+router.post('/api/posts/comments/:post_id', function(req,res) {
   var token = res.query.token;
   var content = res.body.content;
   var postid = res.params.post_id;
@@ -211,15 +212,17 @@ router.get('/api/posts/comments/:post_id', function(req,res) {
             User.find({id: result.id}, function(errs, resul) {
               if(errs) {
                 res.status(500).send("There was an error finding your using when getting comments")
+              } else {
+                results.comment.push({
+                  createdAt: new Date(),
+                  content: content,
+                  poster: {
+                    name: resul.fname + ' ' + resul.lname,
+                    id: resul.id
+                  }
+                })
               }
             })
-            result.comment.push({
-              createdAt: new Date(),
-              content: content,
-              poster: {
-              }
-            })
-            Post.save(results)
           }
         })
       }
